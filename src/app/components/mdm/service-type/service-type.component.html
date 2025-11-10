@@ -1,0 +1,164 @@
+<div class="service-type-page">
+  <!-- Top Header -->
+  <div class="page-header">
+    <div class="vessel-info">
+      <img src="https://flagcdn.com/w40/de.png" alt="Flag" class="flag-icon">
+      <span class="vessel-name">Bernhard Schulte</span>
+    </div>
+    <div class="header-right">
+      <span class="material-icons notification-icon">notifications_none</span>
+      <div class="user-profile">
+        <div class="avatar">JD</div>
+        <span class="user-name">John Doe</span>
+        <span class="material-icons">expand_more</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page Content -->
+  <div class="content-wrapper">
+    <!-- Title and Add Button -->
+    <div class="title-section">
+      <h1>Service Type</h1>
+      <button class="btn-add" (click)="addServiceType()">
+        <span class="material-icons">add</span>
+        Add Service Type
+      </button>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="filters-section">
+      <div class="filter-left">
+        <div class="search-box">
+          <span class="label">Search</span>
+          <div class="input-wrapper">
+            <input 
+              type="text" 
+              placeholder="Search" 
+              [(ngModel)]="searchTerm"
+              (input)="filterServiceTypes()">
+            <span class="material-icons search-icon">search</span>
+          </div>
+        </div>
+
+        <div class="category-select">
+          <span class="label">Category</span>
+          <select [(ngModel)]="selectedCategory" (change)="filterServiceTypes()">
+            <option *ngFor="let cat of categories">{{ cat }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filter-right">
+        <button class="btn-icon" (click)="searchData()" title="Search">
+          <span class="material-icons">search</span>
+        </button>
+        <button class="btn-icon" (click)="resetFilters()" title="Reset Filters">
+          <span class="material-icons">filter_alt_off</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Search and Export -->
+    <div class="action-bar">
+      <div class="search-box-small">
+        <span class="material-icons">search</span>
+        <input 
+          type="text" 
+          placeholder="Search" 
+          [(ngModel)]="searchTerm"
+          (input)="filterServiceTypes()">
+      </div>
+      <button class="btn-export" (click)="exportData()">
+        <span class="material-icons">file_upload</span>
+      </button>
+    </div>
+
+    <!-- Data Table -->
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Service Type</th>
+            <th>Equipment Category</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of paginatedItems">
+            <td>
+              <div class="cell-content">
+                {{ item.serviceType }}
+                <button class="btn-more" (click)="showMoreOptions(item)">
+                  <span class="material-icons">more_vert</span>
+                </button>
+              </div>
+            </td>
+            <td>
+              <div class="cell-content">
+                {{ item.equipmentCategory }}
+                <button class="btn-more" (click)="showMoreOptions(item)">
+                  <span class="material-icons">more_vert</span>
+                </button>
+              </div>
+            </td>
+            <td>
+              <div class="cell-content">
+                <span class="status-badge" [class.active]="item.status === 'Active'">
+                  <span class="status-dot"></span>
+                  {{ item.status }}
+                </span>
+                <button class="btn-more" (click)="showMoreOptions(item)">
+                  <span class="material-icons">more_vert</span>
+                </button>
+              </div>
+            </td>
+            <td>
+              <div class="action-buttons">
+                <button class="btn-action edit" (click)="editServiceType(item)" title="Edit">
+                  <span class="material-icons">edit</span>
+                </button>
+                <button class="btn-action delete" (click)="deleteServiceType(item)" title="Delete">
+                  <span class="material-icons">delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- No Data -->
+      <div class="no-data" *ngIf="paginatedItems.length === 0">
+        <span class="material-icons">inbox</span>
+        <p>No service types found</p>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+      <div class="pagination-info">
+        Showing {{ (currentPage - 1) * itemsPerPage + 1 }} to 
+        {{ Math.min(currentPage * itemsPerPage, filteredServiceTypes.length) }} of 
+        {{ filteredServiceTypes.length }}
+      </div>
+      <div class="pagination-controls">
+        <span class="page-range">
+          {{ (currentPage - 1) * itemsPerPage + 1 }}-{{ Math.min(currentPage * itemsPerPage, filteredServiceTypes.length) }} of {{ filteredServiceTypes.length }}
+        </span>
+        <button 
+          class="btn-page" 
+          [disabled]="currentPage === 1"
+          (click)="previousPage()">
+          <span class="material-icons">chevron_left</span>
+        </button>
+        <button 
+          class="btn-page" 
+          [disabled]="currentPage === totalPages"
+          (click)="nextPage()">
+          <span class="material-icons">chevron_right</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

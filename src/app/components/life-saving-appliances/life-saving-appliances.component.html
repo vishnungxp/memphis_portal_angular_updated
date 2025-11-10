@@ -1,0 +1,204 @@
+<div class="life-saving-page">
+  <!-- Top Header Bar -->
+  <div class="top-header">
+    <div class="vessel-selector">
+      <img src="https://flagcdn.com/w40/de.png" alt="Flag" class="flag-icon">
+      <span class="vessel-name">Bernhard Schulte</span>
+    </div>
+    <div class="header-right">
+      <span class="material-icons notification-icon">notifications_none</span>
+      <div class="user-profile">
+        <div class="avatar">JD</div>
+        <span class="user-name">John Doe</span>
+        <span class="material-icons">expand_more</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-container">
+    <!-- Left Sidebar - Filters -->
+    <div class="left-sidebar">
+      <h2 class="page-title">Life Saving Appliances</h2>
+
+      <!-- Service Type Filter -->
+      <div class="filter-section">
+        <h3 class="filter-title">Service Type</h3>
+        <div class="search-box">
+          <span class="material-icons">search</span>
+          <input type="text" placeholder="Search" [(ngModel)]="searchTerm">
+        </div>
+        <div class="filter-options">
+          <label *ngFor="let type of serviceTypes" class="checkbox-label">
+            <input type="checkbox" [(ngModel)]="type.checked" (change)="filterEquipment()">
+            <span>{{ type.label }}</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Equipment Category Filter -->
+      <div class="filter-section">
+        <h3 class="filter-title">Equipment Category</h3>
+        <div class="search-box">
+          <span class="material-icons">search</span>
+          <input type="text" placeholder="Search" [(ngModel)]="searchEquipment">
+        </div>
+        <div class="filter-options">
+          <label *ngFor="let category of equipmentCategories" class="checkbox-label">
+            <input type="checkbox" [(ngModel)]="category.checked" (change)="filterEquipment()">
+            <span>{{ category.label }}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Middle Section - Equipment List -->
+    <div class="middle-section">
+      <!-- Search Bar -->
+      <div class="search-section">
+        <div class="search-bar-wrapper">
+          <span class="material-icons">search</span>
+          <input type="text" placeholder="Search" [(ngModel)]="searchEquipment" (input)="filterEquipment()">
+        </div>
+        <div class="filter-options-top">
+          <div class="dropdown-filter">
+            <label>Dropdown</label>
+            <select [(ngModel)]="selectedSMC">
+              <option>SMC-IN</option>
+              <option>SMC-US</option>
+              <option>SMC-EU</option>
+            </select>
+          </div>
+          <div class="dropdown-filter">
+            <label>Vessel</label>
+            <select [(ngModel)]="selectedVessel">
+              <option>Select</option>
+              <option>Anna Schulte</option>
+              <option>Bernhard Schulte</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Equipment Count Tabs -->
+      <div class="equipment-tabs">
+        <button class="tab-btn active">
+          All Equipment's
+          <span class="count-badge blue">{{ allEquipmentsCount }}</span>
+        </button>
+        <button class="tab-btn">
+          <span class="count-badge blue">{{ allEquipmentsCount }}</span>
+        </button>
+        <button class="tab-btn">
+          <span class="count-badge blue">{{ allEquipmentsCount }}</span>
+        </button>
+        <button class="tab-btn">
+          <span class="count-badge blue">{{ allEquipmentsCount }}</span>
+        </button>
+      </div>
+
+      <!-- Equipment Cards Grid -->
+      <div class="equipment-grid">
+        <div *ngFor="let equipment of filteredEquipment" 
+             class="equipment-card"
+             [class.selected]="selectedEquipment?.id === equipment.id"
+             (click)="selectEquipment(equipment)">
+          <div class="equipment-image">
+            <img [src]="equipment.image" 
+                 [alt]="equipment.name"
+                 onerror="this.src='https://via.placeholder.com/120x150?text=Device'">
+          </div>
+          <div class="equipment-info">
+            <h4>{{ equipment.name }}</h4>
+            <p class="service-type">Service Type: {{ equipment.serviceType }}</p>
+            <p class="vessel-name">Vessel Name: {{ equipment.vesselName }}</p>
+            <span class="status-badge" [class.active]="equipment.status === 'Active'">
+              <span class="status-dot"></span>
+              {{ equipment.status }}
+            </span>
+          </div>
+          <div class="equipment-date">{{ equipment.serviceDate }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Sidebar - Equipment Details -->
+    <div class="right-sidebar" *ngIf="selectedEquipment">
+      <div class="equipment-header">
+        <h3>{{ selectedEquipment.name }}</h3>
+        <button class="renew-btn" (click)="renewEquipment()">Renew</button>
+      </div>
+      <p class="expiry-info">Expiry Date: {{ selectedEquipment.dateOfExpiry }}</p>
+
+      <div class="equipment-image-large">
+        <img [src]="selectedEquipment.image" 
+             [alt]="selectedEquipment.name"
+             onerror="this.src='https://via.placeholder.com/200x250?text=Device'">
+      </div>
+
+      <!-- Equipment Details Grid -->
+      <div class="details-grid">
+        <div class="detail-item">
+          <label>Service Type</label>
+          <p>{{ selectedEquipment.serviceType.split(' ')[0] + ' ' + selectedEquipment.serviceType.split(' ')[1] }}</p>
+        </div>
+        <div class="detail-item">
+          <label>Maker</label>
+          <p>{{ selectedEquipment.maker }}</p>
+        </div>
+        <div class="detail-item">
+          <label>Type</label>
+          <p>{{ selectedEquipment.type }}</p>
+        </div>
+        <div class="detail-item">
+          <label>Quantity</label>
+          <p>{{ selectedEquipment.quantity }}</p>
+        </div>
+        <div class="detail-item">
+          <label>Date of Manufacturing</label>
+          <p>{{ selectedEquipment.dateOfManufacturing }}</p>
+        </div>
+        <div class="detail-item">
+          <label>Date of Expiry</label>
+          <p>{{ selectedEquipment.dateOfExpiry }}</p>
+        </div>
+        <div class="detail-item">
+          <label>Interval Type</label>
+          <p>{{ selectedEquipment.intervalType }}</p>
+        </div>
+        <div class="detail-item">
+          <label>Interval Comments</label>
+          <p>{{ selectedEquipment.intervalComments }}</p>
+        </div>
+        <div class="detail-item">
+          <label>Equipment Category</label>
+          <p>{{ selectedEquipment.equipmentCategory }}</p>
+        </div>
+        <div class="detail-item">
+          <label>Service Interval</label>
+          <p>{{ selectedEquipment.serviceInterval }}</p>
+        </div>
+      </div>
+
+      <!-- Renewal History -->
+      <div class="renewal-history">
+        <div class="history-header">
+          <h4>Renewal History</h4>
+          <a href="javascript:void(0)" (click)="viewAllHistory()" class="view-all">View All</a>
+        </div>
+        <div *ngFor="let history of renewalHistory" class="history-item">
+          <div class="history-icon">
+            <span class="material-icons">check_circle</span>
+          </div>
+          <div class="history-content">
+            <h5>{{ history.action }}</h5>
+            <div class="history-meta">
+              <span class="badge">{{ history.equipmentType }}</span>
+              <span class="history-text">By: {{ history.performedBy }} on {{ history.date }}</span>
+            </div>
+            <p class="history-desc">{{ history.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="sidebar">
+  <div class="sidebar-header">
+    <h2>Memphis Portal</h2>
+  </div>
+  <nav class="sidebar-nav">
+    <div *ngFor="let item of menuItems" class="nav-item" 
+         [class.active]="item.active">
+      <div class="nav-link" (click)="selectMenuItem(item); toggleSubmenu(item)">
+        <span class="material-icons">{{ item.icon }}</span>
+        <span class="nav-text">{{ item.name }}</span>
+        <span class="material-icons expand-icon" *ngIf="item.hasSubmenu">
+          {{ item.expanded ? 'expand_less' : 'expand_more' }}
+        </span>
+      </div>
+      <div class="submenu" *ngIf="item.hasSubmenu && item.expanded">
+        <a *ngFor="let sub of item.submenu" 
+           [routerLink]="sub.route" 
+           class="submenu-link"
+           routerLinkActive="active">
+          {{ sub.name }}
+        </a>
+      </div>
+    </div>
+  </nav>
+</div>

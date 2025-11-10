@@ -1,0 +1,84 @@
+.sidebar {
+    width: 250px;
+    background-color: #1a2332;
+    color: white;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    h2 {
+        font-size: 20px;
+        font-weight: 500;
+        margin: 0;
+    }
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 10px 0;
+}
+
+.nav-item {
+    margin: 2px 0;
+
+    &.active {
+        background-color: rgba(74, 144, 226, 0.2);
+        border-left: 3px solid #4A90E2;
+    }
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    .material-icons {
+        font-size: 20px;
+        margin-right: 12px;
+    }
+
+    .nav-text {
+        flex: 1;
+        font-size: 14px;
+    }
+
+    .expand-icon {
+        font-size: 18px;
+    }
+}
+
+.submenu {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 5px 0;
+}
+.submenu-link {
+    display: block;
+    padding: 12px 20px 12px 60px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+        color: white;
+    }
+
+    &.active {
+        background-color: rgba(74, 144, 226, 0.3);
+        color: white;
+        border-left: 3px solid #4A90E2;
+    }
+}

@@ -1,0 +1,31 @@
+<div class="header">
+  <div class="header-left">
+    <div class="dropdown">
+      <select [(ngModel)]="selectedSMC" class="select-box">
+        <option>SMC-IN</option>
+        <option>SMC-US</option>
+        <option>SMC-EU</option>
+      </select>
+    </div>
+    <div class="dropdown">
+      <select [(ngModel)]="selectedVessel" class="select-box">
+        <option>Select Vessel</option>
+        <option>Vessel 1</option>
+        <option>Vessel 2</option>
+      </select>
+    </div>
+  </div>
+  <div class="header-center">
+    <div class="counter">
+      <span class="count">{{ smcCount }}</span>
+      <span class="label">SMC</span>
+    </div>
+    <div class="counter">
+      <span class="count">{{ vesselCount }}</span>
+      <span class="label">Vessels</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <button class="show-vessel-btn">Show Vessel</button>
+  </div>
+</div>
