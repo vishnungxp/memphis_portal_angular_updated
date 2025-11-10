@@ -38,19 +38,31 @@ import { filter } from 'rxjs/operators';
       flex: 1;
       overflow-y: auto;
       overflow-x: hidden;
+      background: #f5f7fa;
     }
   `]
 })
 export class AppComponent {
-  title = 'Memphis Portal Dashboard';
+  title = 'Memphis Portal';
   showHeader = true;
 
   constructor(private router: Router) {
+    // Listen to route changes to show/hide header
     this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
-      // Hide header for life-saving-appliances page
-      this.showHeader = !event.url.includes('/safety/life-saving-appliances');
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe((event) => {
+      // Pages with custom headers should hide the main dashboard header
+      const pagesWithCustomHeaders = [
+        '/safety/life-saving-appliances',
+        '/mdm/service-type',
+        '/mdm/equipment-category',
+        '/mdm/equipment',
+        '/mdm/maker',
+        '/mdm/cost-category'
+      ];
+      
+      // Check if current route matches any page with custom header
+      this.showHeader = !pagesWithCustomHeaders.some(page => event.url.includes(page));
     });
   }
 }

@@ -30,9 +30,13 @@
     &.active {
         background-color: rgba(74, 144, 226, 0.2);
         border-left: 3px solid #4A90E2;
+
+        > .nav-link {
+            color: white;
+        }
     }
 
-    &:hover {
+    &:hover:not(.active) {
         background-color: rgba(255, 255, 255, 0.05);
     }
 }
@@ -43,6 +47,12 @@
     padding: 12px 20px;
     cursor: pointer;
     transition: all 0.3s ease;
+    color: rgba(255, 255, 255, 0.8);
+    position: relative;
+
+    &.clickable {
+        cursor: pointer;
+    }
 
     .material-icons {
         font-size: 20px;
@@ -56,17 +66,38 @@
 
     .expand-icon {
         font-size: 18px;
+        margin-left: auto;
+        margin-right: 0;
+        transition: transform 0.3s ease;
+    }
+
+    &:hover {
+        color: white;
     }
 }
 
 .submenu {
     background-color: rgba(0, 0, 0, 0.2);
     padding: 5px 0;
+    animation: slideDown 0.3s ease;
 }
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+
+    to {
+        opacity: 1;
+        max-height: 500px;
+    }
+}
+
 .submenu-link {
     display: block;
     padding: 12px 20px 12px 60px;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     font-size: 14px;
     transition: all 0.3s;
@@ -80,5 +111,23 @@
         background-color: rgba(74, 144, 226, 0.3);
         color: white;
         border-left: 3px solid #4A90E2;
+    }
+}
+
+/* Scrollbar styling */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.3);
     }
 }

@@ -5,18 +5,27 @@
   <nav class="sidebar-nav">
     <div *ngFor="let item of menuItems" class="nav-item" 
          [class.active]="item.active">
-      <div class="nav-link" (click)="selectMenuItem(item); toggleSubmenu(item)">
+      
+      <!-- Menu Item -->
+      <div class="nav-link" 
+           (click)="selectMenuItem(item, $event)"
+           [class.clickable]="!item.hasSubmenu || item.route">
         <span class="material-icons">{{ item.icon }}</span>
         <span class="nav-text">{{ item.name }}</span>
-        <span class="material-icons expand-icon" *ngIf="item.hasSubmenu">
+        <span class="material-icons expand-icon" 
+              *ngIf="item.hasSubmenu"
+              (click)="toggleSubmenu(item, $event)">
           {{ item.expanded ? 'expand_less' : 'expand_more' }}
         </span>
       </div>
+
+      <!-- Submenu -->
       <div class="submenu" *ngIf="item.hasSubmenu && item.expanded">
         <a *ngFor="let sub of item.submenu" 
-           [routerLink]="sub.route" 
            class="submenu-link"
-           routerLinkActive="active">
+           [routerLink]="sub.route"
+           routerLinkActive="active"
+           (click)="selectSubmenuItem(item, sub, $event)">
           {{ sub.name }}
         </a>
       </div>
